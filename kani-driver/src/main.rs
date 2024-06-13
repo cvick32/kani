@@ -11,6 +11,7 @@ use args_toml::join_args;
 
 use crate::args::StandaloneSubcommand;
 use crate::concrete_playback::playback::{playback_cargo, playback_standalone};
+use crate::list::list::list_cargo;
 use crate::project::Project;
 use crate::session::KaniSession;
 use crate::version::print_kani_version;
@@ -31,6 +32,7 @@ mod cbmc_output_parser;
 mod cbmc_property_renderer;
 mod concrete_playback;
 mod harness_runner;
+mod list;
 mod metadata;
 mod project;
 mod session;
@@ -77,6 +79,9 @@ fn cargokani_main(input_args: Vec<OsString>) -> Result<()> {
         }
         Some(CargoKaniSubcommand::Playback(args)) => {
             return playback_cargo(*args);
+        }
+        Some(CargoKaniSubcommand::List(args)) => {
+            return list_cargo(session, *args);
         }
         None => {}
     }

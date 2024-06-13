@@ -5,6 +5,7 @@
 pub mod assess_args;
 pub mod cargo;
 pub mod common;
+pub mod list_args;
 pub mod playback_args;
 pub mod std_args;
 
@@ -115,6 +116,9 @@ pub struct CargoKaniArgs {
 pub enum CargoKaniSubcommand {
     #[command(hide = true)]
     Assess(Box<crate::assess::AssessArgs>),
+
+    // List Kani harness information for a local package.
+    List(Box<list_args::CargoListArgs>),
 
     /// Execute concrete playback testcases of a local package.
     Playback(Box<playback_args::CargoPlaybackArgs>),
@@ -499,6 +503,7 @@ impl ValidateArgs for CargoKaniSubcommand {
         match self {
             // Assess doesn't implement validation yet.
             CargoKaniSubcommand::Assess(_) => Ok(()),
+            CargoKaniSubcommand::List(_) => Ok(()),
             CargoKaniSubcommand::Playback(playback) => playback.validate(),
         }
     }
