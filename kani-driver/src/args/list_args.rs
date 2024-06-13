@@ -1,13 +1,15 @@
 // Copyright Kani Contributors
 // SPDX-License-Identifier: Apache-2.0 OR MIT
-//! Implements the subcommand handling of the playback subcommand
+//! Implements the subcommand handling of the list subcommand
 
-use crate::args::cargo::CargoTestArgs;
+use std::path::PathBuf;
+
 use clap::Parser;
 
-/// List all harnesses in current package.
+/// List harness information for the current package.
 #[derive(Debug, Parser)]
 pub struct CargoListArgs {
-    #[command(flatten)]
-    pub cargo: CargoTestArgs,
+    // Only list Kani data for the given file.
+    #[arg(long)]
+    pub specific_file: Option<PathBuf>,
 }
